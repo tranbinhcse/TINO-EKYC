@@ -10,7 +10,6 @@
 
 <script setup>
 import 'ant-design-vue/dist/antd.css'; // or 'ant-design-vue/dist/antd.less'
-
 import EkycForm from './components/ekyc/EkycForm.vue';
 import { ThemeProvider } from "vue3-styled-components";
  
@@ -36,7 +35,7 @@ import { ThemeProvider } from "vue3-styled-components";
   /* margin-top: 60px; */
 }
 .ekyc-page{
-  max-width: 800px;
+  max-width: 1024px;
     width: 100%;
     margin: 0 auto;
     display: flex;
@@ -51,4 +50,5 @@ import { ThemeProvider } from "vue3-styled-components";
   padding-bottom: 100px;
   padding-top: 50px;
 }
+
 </style>

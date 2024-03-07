@@ -50,11 +50,11 @@ export default defineComponent({
 
         const faceActions = [
             { action: "forward", message: "Nhìn thẳng về phía máy ảnh" },
-            // { action: "up", message: "Quay lên trên" },
-            // { action: "down", message: "Quay xuống dưới" },
-            // { action: "left", message: "Quay sang trái" },
-            // { action: "right", message: "Quay sang phải" },
-            // { action: "eye-closed", message: "Nhắm mắt" },
+            { action: "up", message: "Quay lên trên" },
+            { action: "down", message: "Quay xuống dưới" },
+            { action: "left", message: "Quay sang trái" },
+            { action: "right", message: "Quay sang phải" },
+            { action: "eye-closed", message: "Nhắm mắt" },
         ];
 
         const getActionsSequence = () => {
