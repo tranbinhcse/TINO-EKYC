@@ -1,9 +1,13 @@
 <template>
    <ThemeProvider>
     <div class="ekyc-page">
-      <img src="./assets/logo.png" alt="" class="logo">
-      <EkycForm />
+      <p></p>
       <p style="color:red">(*) Vui lòng sử dụng thiết bị có camera/webcam để tiến hành xác thực (eKYC).</p>
+      <EkycForm />
+    
+
+      <a-button type="secondary" @click="reloadPage">Tải lại trang</a-button>
+      <img src="./assets/quytrinh.jpg" alt="" style=" width: 100%; max-width: 800px; ">
     </div>
     </ThemeProvider>
 </template>
@@ -22,16 +26,19 @@ import { ThemeProvider } from "vue3-styled-components";
 //     ThemeProvider
 //   }
 // }
+const reloadPage = () => {
+  window.location.reload();
+}
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  font-size: 20px;
+  font-size: 14px;
   /* margin-top: 60px; */
 }
 .ekyc-page{

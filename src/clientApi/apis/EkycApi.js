@@ -205,7 +205,7 @@ export default {
         return {
           success: false,
           message:
-            "Không tìm được giấy tờ trong ảnh. Nếu bạn đã làm đúng theo hướng dẫn, hãy liên hệ với VNNIC để được hỗ trợ.",
+            "Không tìm được giấy tờ trong ảnh. Nếu bạn đã làm đúng theo hướng dẫn, hãy liên hệ với chúng tôi để được hỗ trợ.",
         };
       } else {
         return {

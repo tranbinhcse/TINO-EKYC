@@ -24,15 +24,7 @@
       </a-modal>
     </template>
 
-     <template v-if="currentStep === 'face'" >
-      <a-modal @cancel="handleCancelPopup" :visible="visibleModal" title="Face">
-        <Suspense>
-          <template #default>
-            <FaceDetection :open="open" @DataImage="handleFaceId"/>
-          </template>
-        </Suspense>
-      </a-modal>
-    </template>
+    
 
       <a-row>
         <a-col :span="24" v-if="!isMobile" >
@@ -47,29 +39,29 @@
         <a-col :span="24">
           
           <a-row>
-            <a-col :span="24" v-if="currentStep === 'cardFront'">
+            <a-col :span="12" v-if="currentStep === 'cardFront' || currentStep === 'cardBack'">
+            
               <a-card title="Ảnh CCCD mặt trước">
-                <img :src="cardimageFront" style="width: 100%" />
+                <img :src="cardimageFront" style="width: 100%; max-height: 400px;" />
                 <a-spin tip="Đang kiểm tra dữ liệu" v-if="isDetectingData" />
                 <div class="cardimage cardimage-front" v-else>
-                  <a-upload :max-count="1"  :before-upload="beforeUploadFrontCard" accept="image/png, image/jpeg" listType="picture">
+                  <a-upload :max-count="1"  :before-upload="beforeUploadFrontCard" accept="image/png, image/jpeg" listType="picture" v-if="!frontOK">
                     <a-button type="primary" outlined block>
                       <unicon name="upload" width="40"/>
                       Chọn ảnh
                     </a-button>
-               
-                  
                   </a-upload>
                 </div>
               </a-card>
+              
             </a-col>
 
-            <a-col :span="24" v-if="currentStep === 'cardBack'">
+            <a-col :span="12" v-if="currentStep === 'cardFront' || currentStep === 'cardBack'">
                <a-card title="Ảnh CCCD mặt sau">
-                <img :src="cardimageBack" style="width: 100%" />
+                <img :src="cardimageBack" style="width: 100% ; max-height: 400px" />
                   <a-spin tip="Đang kiểm tra dữ liệu" v-if="isDetectingData" />
                   <div class="cardimage cardimage-back" v-else>
-                    <a-upload v-if="isUpload" :max-count="1"  accept="image/png, image/jpeg" listType="picture"
+                    <a-upload v-if="!backOK" :max-count="1"  accept="image/png, image/jpeg" listType="picture"
                       :before-upload="beforeUploadBackCard"
                     >
                     <a-button type="primary" outlined block>
@@ -78,16 +70,42 @@
                     </a-button>
                     </a-upload>
                   </div>
+                  
                 </a-card>
+            </a-col>
+            <a-col :span="24"  v-if="currentStep === 'cardFront' || currentStep === 'cardBack'" >
+              <div class="khungcmnd">
+                <strong>Lưu ý khi tải lên hình ảnh CCCD của&nbsp;bạn:</strong>
+                  <div class="group_cmnd truoc">
+                      <div class="cmnd cmnd_1 ok">Hợp lệ</div>
+                      <div class="cmnd cmnd_2 er">Không bị cắt</div>
+                      <div class="cmnd cmnd_3 er">Không mờ</div>
+                      <div class="cmnd cmnd_4 er">Không bị lóa</div>
+                  </div>
+              </div>
             </a-col>
             <a-col  :span="24" v-if="currentStep === 'face'" >
               <a-card title="Xác thực khuôn mặt">
+                <template v-if="currentStep === 'face'" >
+                  <a-card>
+                    <Suspense>
+                      <template #default>
+                        <FaceDetection :open="open" @DataImage="handleFaceId"/>
+                      </template>
+                    </Suspense>
+                  </a-card>
+                </template>
+
                 <a-row :gutter="[25,25]">
                   <a-col :span="12"> <img :src="cardimageFront" style="width: 100%" /></a-col>
                   <a-col :span="12"> <img :src="cardimageBack" style="width: 100%" /></a-col>
                 </a-row>
                   <a-spin tip="Đang kiểm tra dữ liệu" v-if="isDetectingData" />
                 </a-card>
+
+
+              
+
             </a-col>
           </a-row>
         </a-col>
@@ -103,6 +121,7 @@
           </a-card>
         </a-col>
       </a-row>
+    
   </EkycForm>
 </template>
 
@@ -159,7 +178,8 @@ const items = [
 ];
 
 
- 
+  const frontOK = ref(false)
+  const backOK = ref(false)
     const cardimageFront = ref('')
     const cardimageBack = ref('')
     const currentStep = ref('cardFront')
@@ -177,6 +197,8 @@ const items = [
       open.value = true;
       visibleModal.value = true;
       isDetectingData.value = false; 
+      backOK.value = false;
+            frontOK.value = false;
     }
  
     const delayStep = (async() => {
@@ -203,10 +225,12 @@ const items = [
             delayStep();
             currentStep.value = "cardBack";
             visibleModal.value = true;
+            frontOK.value = true
             isDetectingData.value = false; 
           } else {      
             currentStep.value = "cardFront";
             isUpload.value = true;
+            frontOK.value = false;
             resetForm();
           } 
         })
@@ -233,9 +257,12 @@ const items = [
             delayStep();
             currentStep.value = "face";
             visibleModal.value = true;
+            backOK.value = true
           } else {      
             currentStep.value = "cardFront";
             isUpload.value = true;
+            backOK.value = false;
+            frontOK.value = false;
             resetForm();
           }
           isDetectingData.value = false; 
@@ -266,6 +293,9 @@ const items = [
           } else {      
             currentStep.value = "faield";
             resetForm();
+            currentStep.value = "cardFront";
+            isUpload.value = true;
+            frontOK.value = false;
           }
           isDetectingData.value = false; 
       }).catch((error) => {
@@ -411,10 +441,10 @@ const items = [
       const dataCheck = EkycApi.ocrBackCardChecking(data, frontData.value);
       backData.value = data
       if(dataCheck.success){
-          message.info(dataCheck.message)
+          message.info(dataCheck.message, 10)
           return dataCheck.success
       } else {
-        message.info(dataCheck.message)
+        message.error(dataCheck.message, 10)
         resetForm();
 
       }
@@ -422,7 +452,7 @@ const items = [
 
     const processFaceRecognitionResponse = (data) => {
       const dataCheck = EkycApi.faceVerificationChecking(data)
-      message.info(dataCheck.message);
+      message.info(dataCheck.message, 10);
       return dataCheck.success
     }
 

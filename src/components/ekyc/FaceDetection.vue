@@ -1,7 +1,6 @@
 <template>
     <div>
         <a-alert   v-if="!loadingVideo" c :message="`${ randomActionSequenceRef[stepRef]?.message }`" type="success" ></a-alert>
-
         <VideoBox>
             <div v-if="loadingVideo" class="pre-loading-video">
                 <a-spin size="large"  tip="Đang mở camera..." spinning />
@@ -11,6 +10,32 @@
                 <canvas id="photoTaken" ref="canvas" style=" max-width: 100%;  display:none" :width="450" :height="337.5"></canvas>
             </div>
         </VideoBox>
+    </div>
+    <div>   
+        <p><b>Lưu ý khi chụp hình khuôn mặt của&nbsp;bạn:</b></p>
+        <div class="face_icon">
+            <span class="item">
+                <img alt="face-id" src="/assets/No_hat.svg">
+                Không đội nón
+            </span>
+            <span class="item">
+                <img alt="face-id" src="/assets/No_glasses.svg">
+                Không đeo kính
+            </span>
+            <span class="item">
+                <img alt="face-id" src="/assets/No_facemas.svg">
+                Không đeo khẩu trang
+            </span>
+        </div>
+        <ul style=" text-align: left; font-size: 14px; ">
+            <li>Để <b>camera bao trọn khuôn mặt</b>&nbsp;bạn.</li>
+            <li><b>Không để mặt người khác cùng xuất hiện</b> trong&nbsp;camera.</li>
+            <li><b>Làm theo chỉ dẫn</b> ở màn hình.</li>
+            <li>Số <b>giây để bạn thực hiện</b> sẽ hiển thị trên <b>góc phải trên&nbsp;cùng</b>.</li>
+            <li>Sẽ có <b>âm thanh thông báo</b> khi bạn <b>thực hiện thành&nbsp;công</b>.</li>
+            <li>Bạn cần <b>cho phép truy cập camera</b> và <b>cập nhật phiên bản mới nhất của trình duyệt</b> để sử dụng tính năng xác thực này.</li>
+            <li><b><span style="color:#FC4649;">Bạn sẽ phải chụp hình lại từ đầu</span>, nếu không thực hiện theo chỉ dẫn trong thời gian cho&nbsp;phép</b>.</li>
+        </ul>
     </div>
 </template>
 <script>
@@ -281,3 +306,22 @@ export default defineComponent({
 
 
 </script>
+<style>
+
+.face_icon{
+  display:block;
+}
+.face_icon .item{
+  display:block;
+  float:left;
+  width:33.3%;
+  padding: 0 10px 16px;
+  text-align:center;
+}
+.face_icon .item img{
+  width:80px;
+  height:80px;
+  display:block;
+  margin:0 auto 8px;
+}
+</style>
