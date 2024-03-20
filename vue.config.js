@@ -9,7 +9,7 @@ module.exports = defineConfig({
     https: true,
     proxy: {
       '^/api': {
-        target: 'https://api.tino.vn/',
+        target: 'https://my.tino.org/api/',
         ws: true,
         changeOrigin: true,
         pathRewrite: {

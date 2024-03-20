@@ -245,6 +245,7 @@ export const EkycForm = styled.div`
 
 `;
 export const VideoBox = styled.div`
+  position: relative;
       background: transparent;
       .video-box{
         position: relative;

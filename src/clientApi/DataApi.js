@@ -14,7 +14,7 @@ const client = axios.create({
   baseURL: API_ENDPOINT,
   headers: {
     'Content-Type': 'application/json',
-  },
+  }, 
 });
 
 class ClientApi {

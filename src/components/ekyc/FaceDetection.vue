@@ -1,7 +1,12 @@
 <template>
     <div>
-        <a-alert   v-if="!loadingVideo" c :message="`${ randomActionSequenceRef[stepRef]?.message }`" type="success" ></a-alert>
+        <p  style=" background: #00ff9d; font-size: 18px; text-align: center; text-transform: uppercase; margin: 0;" v-if="!loadingVideo" type="success" >{{ randomActionSequenceRef[stepRef]?.message  }}</p>
+      
+        <div v-if="stepRef == 0" style="background: #00ff9d; font-size: 16px; text-align: center;">Đưa gương mặt về phía trước trùng với khung hình và duy chuyển nhẹ phần đầu của bạn.</div>
         <VideoBox>
+            <div style=" position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 12; ">
+                <img src="@/assets/frameface.png" alt="" style="height: 100%;">
+            </div>
             <div v-if="loadingVideo" class="pre-loading-video">
                 <a-spin size="large"  tip="Đang mở camera..." spinning />
             </div>
@@ -75,8 +80,8 @@ export default defineComponent({
 
         const faceActions = [
             { action: "forward", message: "Nhìn thẳng về phía máy ảnh" },
-            { action: "up", message: "Quay lên trên" },
-            { action: "down", message: "Quay xuống dưới" },
+            // { action: "up", message: "Quay lên trên" },
+            // { action: "down", message: "Quay xuống dưới" },
             { action: "left", message: "Quay sang trái" },
             { action: "right", message: "Quay sang phải" },
             { action: "eye-closed", message: "Nhắm mắt" },

@@ -72,7 +72,7 @@ export default {
             return { success: false, message: "Ảnh CMT mặt trước không hợp lệ." };
           }
       
-          return { success: true, message: "OK." };
+          return { success: true, message: "Đã kiểm tra xong ảnh CCCD mặt trước." };
         }
       } else {
         return {
@@ -108,7 +108,7 @@ export default {
         return {
           success: false,
           message:
-            "Không tìm được giấy tờ trong ảnh. Nếu bạn đã làm đúng theo hướng dẫn, hãy liên hệ với VNNIC để được hỗ trợ.",
+            "Không thể phân tích giấy tờ trong ảnh. Nếu bạn đã làm đúng theo hướng dẫn, hãy liên hệ với chúng tôi để được hỗ trợ.",
         };
       },
       
@@ -175,7 +175,7 @@ export default {
               }
             }
         
-            return { success: true, message: "OK." };
+            return { success: true, message: "Đã kiểm tra xong ảnh CCCD mặt sau." };
           }
      
       
@@ -205,7 +205,7 @@ export default {
         return {
           success: false,
           message:
-            "Không tìm được giấy tờ trong ảnh. Nếu bạn đã làm đúng theo hướng dẫn, hãy liên hệ với chúng tôi để được hỗ trợ.",
+            "Không thể phân tích giấy tờ trong ảnh. Nếu bạn đã làm đúng theo hướng dẫn, hãy liên hệ với chúng tôi để được hỗ trợ.",
         };
       } else {
         return {

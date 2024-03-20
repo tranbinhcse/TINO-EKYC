@@ -1,6 +1,7 @@
 <template>
  
   <EkycForm> 
+    
     <template v-if="currentStep === 'ekycHelp'" >
       <help-ekyc @comfirm="handleBeginProcess" />
     </template>
@@ -27,28 +28,37 @@
     
 
       <a-row>
-        <a-col :span="24" v-if="!isMobile" >
-          
-          <a-steps :current="current" size="default" :percent="60">
+        <a-col :span="24" v-if="!isMobile && currentStep != 'complate'" >
+          <a-steps :current="current">
             <a-step v-for="item in items" :key="item.title" :title="item.title" :description="item.description"  />
           </a-steps>
           <a-divider />
+       
         </a-col>
-        
+        <a-col :span="24">
+          <h3 style="text-align: center;">XÁC THỰC MỘT LẦN, AN TOÀN MÃI MÃI, KHÔNG LO MẤT TÊN MIỀN</h3>
+          <a-divider />
+        </a-col>
+       
 
         <a-col :span="24">
           
           <a-row>
-            <a-col :span="12" v-if="currentStep === 'cardFront' || currentStep === 'cardBack'">
+            <a-col :span="24" v-if="currentStep === 'cardFront'">
             
-              <a-card title="Ảnh CCCD mặt trước">
+              <a-card title="CCCD mặt trước">
                 <img :src="cardimageFront" style="width: 100%; max-height: 400px;" />
                 <a-spin tip="Đang kiểm tra dữ liệu" v-if="isDetectingData" />
                 <div class="cardimage cardimage-front" v-else>
+                  
                   <a-upload :max-count="1"  :before-upload="beforeUploadFrontCard" accept="image/png, image/jpeg" listType="picture" v-if="!frontOK">
-                    <a-button type="primary" outlined block>
+                    <a-button type="primary" outlined block v-if="isMobile">
                       <unicon name="upload" width="40"/>
-                      Chọn ảnh
+                      Chụp CCCD mặt trước
+                    </a-button>
+                    <a-button type="primary" outlined block v-else>
+                      <unicon name="upload" width="40"/>
+                      Chọn CCCD mặt trước
                     </a-button>
                   </a-upload>
                 </div>
@@ -56,17 +66,21 @@
               
             </a-col>
 
-            <a-col :span="12" v-if="currentStep === 'cardFront' || currentStep === 'cardBack'">
-               <a-card title="Ảnh CCCD mặt sau">
+            <a-col :span="24" v-if="currentStep === 'cardBack'">
+               <a-card title=" CCCD mặt sau">
                 <img :src="cardimageBack" style="width: 100% ; max-height: 400px" />
                   <a-spin tip="Đang kiểm tra dữ liệu" v-if="isDetectingData" />
                   <div class="cardimage cardimage-back" v-else>
                     <a-upload v-if="!backOK" :max-count="1"  accept="image/png, image/jpeg" listType="picture"
                       :before-upload="beforeUploadBackCard"
                     >
-                    <a-button type="primary" outlined block>
+                    <a-button type="primary" outlined block v-if="isMobile">
                       <unicon name="upload" width="40"/>
-                      Chọn ảnh 
+                      Chụp CCCD mặt sau 
+                    </a-button>
+                    <a-button type="primary" outlined block v-else>
+                      <unicon name="upload" width="40"/>
+                      Chọn CCCD mặt sau
                     </a-button>
                     </a-upload>
                   </div>
@@ -117,17 +131,41 @@
         </a-col>
         <a-col :span="24"  v-if="currentStep === 'complate'">
           <a-card>
-            Cảm ơn bạn đã định danh thông tin hoàn tất.
+            <img src="@/assets/ekyc-complate.webp" alt="" style="max-width: 150px;">
+            <h1>Cảm ơn bạn đã định danh thông tin hoàn tất.</h1>
+            <p>Hồ sơ tên miền của bạn sẽ được xử lý và hoàn tất trong 3-5 phút tới.</p>
           </a-card>
         </a-col>
       </a-row>
-    
+      <a-row v-if="currentStep != 'complate'">
+        <a-col>
+          <p style="color:red">(*) Vui lòng sử dụng thiết bị có camera/webcam để tiến hành xác thực (eKYC).</p>
+
+          <a-button type="secondary" @click="reloadPage">Tải lại trang</a-button>
+
+
+              <p>
+                <ul class="text-left" style="text-align: left;">
+                  <li>Công nghệ nhận diện xác thực hồ sơ EKYC do Trung tâm Internet Việt Nam phát triển, giúp xác thực hồ sơ tên miền nhanh chóng, bảo mật và an toàn.</li>
+                  <li>EKYC giúp việc đăng ký tên miền thuận lợi. Đồng bộ cho toàn bộ tên miền.</li>
+                  <li>Thực hiện EKYC 1 lần duy nhất, được xác thực và bảo mật bởi Trung tâm Internet Việt Nam.</li>
+                  <li>Xác thực hồ sơ điện tử EKYC giúp bảo vệ tên miền của bạn.</li>
+                  <li>Theo quy định Thông tư số 24/2015/TT-BTTTT ngày 18/08/2015 của Bộ Thông tin và Truyền thông hướng dẫn về quản lý và sử dụng tài nguyên Internet và Thông tư số 21/2021/TT-BTTTT ngày 08/12/2021 sửa đổi, bổ sung một số điều của thông tư số 24/2015/TT-BTTTT, chủ thể tên miền phải có trách nhiệm hoàn thiện hồ sơ đăng ký tên miền cho Nhà đăng ký quản lý và lưu giữ.</li>
+                </ul>
+              </p>
+
+
+              <img src="@/assets/quytrinh.jpg" alt="" style=" width: 100%; max-width: 800px; ">
+
+
+        </a-col>
+      </a-row>
   </EkycForm>
 </template>
 
 <script setup>
- import { EkycForm } from './style.js'
- import { isMobile } from 'mobile-device-detect'; 
+import { EkycForm } from './style.js'
+import { isMobile } from 'mobile-device-detect'; 
 
 import { message } from 'ant-design-vue'
 import { ref, h, defineEmits, watch} from "vue";
@@ -151,6 +189,13 @@ import {
 // defineProps({
 //   contact_id: propTypes.init
 // })
+
+
+const reloadPage = () => {
+  window.location.reload();
+}
+
+
 const emit = defineEmits(['UserData'])
 
 const current = ref(0);

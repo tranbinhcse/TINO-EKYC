@@ -1,13 +1,11 @@
 <template>
    <ThemeProvider>
     <div class="ekyc-page">
-      <p></p>
-      <p style="color:red">(*) Vui lòng sử dụng thiết bị có camera/webcam để tiến hành xác thực (eKYC).</p>
+      <p><img src="https://vnnic.vn/sites/default/files/vnnic_logo-01.png" alt="" class="logo"></p>
+     
       <EkycForm />
     
 
-      <a-button type="secondary" @click="reloadPage">Tải lại trang</a-button>
-      <img src="./assets/quytrinh.jpg" alt="" style=" width: 100%; max-width: 800px; ">
     </div>
     </ThemeProvider>
 </template>
@@ -26,9 +24,7 @@ import { ThemeProvider } from "vue3-styled-components";
 //     ThemeProvider
 //   }
 // }
-const reloadPage = () => {
-  window.location.reload();
-}
+
 </script>
 
 <style>
@@ -54,8 +50,8 @@ const reloadPage = () => {
 }
 .logo{
   max-width: 200px;
-  padding-bottom: 100px;
-  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-top: 10px;
 }
 
 </style>
